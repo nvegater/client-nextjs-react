@@ -12,4 +12,6 @@ yarn add --dev typescript @types/node
 Rename Files to TSX
 Keep `_app.tsx` as it is. It contains the Theming from Chakra
 
-Modify Index for Hello world
+Modify Index for Hello world.
+
+Create Register. Every new component in `pages/` is a route
