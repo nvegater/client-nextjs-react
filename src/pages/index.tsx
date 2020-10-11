@@ -1,5 +1,7 @@
+import Register from "./register";
+import FComponent from "../components/Wrapper";
 
-const Index = () => <div>Hello workd</div>
+const Index = () => <FComponent><Register/></FComponent>
 
 
 export default Index
