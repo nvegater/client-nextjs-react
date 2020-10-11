@@ -37,6 +37,8 @@ export default ResponsiveContainer;
 
 const StyledDiv = styled.div`
   display: flex;
+  max-height: 50vw;
+  margin: 25vh 0 25vh 0;
 `;
 const resizeToMobile = keyframes`
  0% { width: 70vh; }
@@ -47,7 +49,7 @@ const resizeToMobile = keyframes`
 const Mobile = styled.div`
   text-align: center;
   max-width: 90vw;
-  margin: 0 5vw 0 5vw;
+  margin: 25vh 5vw 25vh 5vw;
   animation-name: ${resizeToMobile};
   animation-duration: 1s;
   animation-iteration-count: initial;
@@ -55,13 +57,13 @@ const Mobile = styled.div`
 const Tablet = styled.div`
   text-align: center;
   max-width: 70vw;
-  margin: 0 20vw 0 10vw;
+  margin: 25vh 15vw 25vh 15vw;
 `;
 const Desktop = styled.div`
   text-align: center;
   justify-content: center;  
   max-width: 20vw;
-  margin: 0 40vw 0 40vw;
+  margin: 25vh 40vw 25vh 40vw;
 `;
 
 
