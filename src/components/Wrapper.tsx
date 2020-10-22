@@ -38,7 +38,6 @@ export default ResponsiveContainer;
 const StyledDiv = styled.div`
   display: flex;
   max-height: 50vw;
-  margin: 25vh 0 25vh 0;
 `;
 const resizeToMobile = keyframes`
  0% { width: 70vh; }
