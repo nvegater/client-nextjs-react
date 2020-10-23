@@ -37,9 +37,9 @@ const Register: FC<RegisterProps> = () => {
     const [, updateRegister] = useMutation(REGISTER_MUTATION)
 
     return <Formik initialValues={{username: "", password: ""}}
-                   onSubmit={(props: FormikValues) => {
+                   onSubmit={async (props: FormikValues) => {
                                 console.log(props)
-                            return updateRegister(props)
+                            return await updateRegister(props)
     }}>
         {
             ({isSubmitting}) => (
