@@ -18,15 +18,19 @@ const Register: FC = () => {
     const [, updateRegister] = useRegisterMutation()
 
     return <Formik initialValues={{username: "", password: ""}}
-                   onSubmit={async (props) => {
-                                    console.log(props)
-                                    const response = await updateRegister(props);
-                                    console.log(response.data?.register.user)
-                                    console.log(response.data?.register.errors)
-                                return response
-                                }
-                            }
-            >
+                   onSubmit={
+                       async (props) => {
+                           console.log(props)
+                           const response = await updateRegister(props);
+                           console.log(response.data?.register.user)
+                           console.log(response.data?.register.errors)
+                           if (response.data?.register.errors){
+                               // handle error with formik
+                           }
+                           return response
+                       }
+                   }
+    >
         {
             ({isSubmitting}) => (
                 <Form>

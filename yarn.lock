@@ -1570,18 +1570,6 @@
     auto-bind "~4.0.0"
     tslib "~2.0.0"
 
-"@graphql-codegen/typescript-react-apollo@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-react-apollo/-/typescript-react-apollo-2.0.7.tgz#836642429259b73e7da40aa5d74c14fdf91337d6"
-  integrity sha512-vJunXm8sDXBeTPK5ULCpu9jMEJEnbI3kk7xXW1aNeoP+O56J2cJVj2vcy/1UwPQqhDPVoEvQv7sszm0bUE/Ljw==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "^1.17.9"
-    "@graphql-codegen/visitor-plugin-common" "^1.17.15"
-    auto-bind "~4.0.0"
-    camel-case "^4.1.1"
-    pascal-case "^3.1.1"
-    tslib "~2.0.1"
-
 "@graphql-codegen/typescript-urql@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-urql/-/typescript-urql-2.0.2.tgz#a2f8c6b245522fafe38c6e43961b43fba52fe9c5"
@@ -2081,6 +2069,13 @@
   version "0.63.27"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.27.tgz#c97ecad8183bc15e33a6f355420cf20ce990c633"
   integrity sha512-p9MKEIuq/6DkIhHzMWlTV+ZXjJ99UF7BLdnBcvizO0hf5o+pnjudjkSjZikEyB3P12WkZD0jp1UGzCm/8EnWvg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-responsive@^8.0.2":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-responsive/-/react-responsive-8.0.2.tgz#959fdc32f72e38b807e32be617a74be2c315081b"
+  integrity sha512-DTvm3Hb77v0hme7L4GYzRjLQqlZP+zNImFBzdKbSH7CsQ5c7QebGnSQX2Xf3BaA0rm/TQE57eFMhMGLcMe/A9w==
   dependencies:
     "@types/react" "*"
 
@@ -7819,11 +7814,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-types@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/types/-/types-0.1.1.tgz#860c6859d11366293f835d8c95aebcf95029838e"
-  integrity sha1-hgxoWdETZik/g12Mla68+VApg44=
 
 typescript@^4.0.3:
   version "4.0.3"
