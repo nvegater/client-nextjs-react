@@ -1,8 +1,8 @@
 import React, {FC} from "react";
-import {Form, Formik, FormikValues} from "formik";
+import {Form, Formik} from "formik";
 import InputField from "../components/InputField";
 import {Button} from "@chakra-ui/core";
-import {useMutation} from "urql";
+import {useRegisterMutation} from "../generated/graphql";
 
 //For advanced usage: https://formik.org/docs/api/useFormik
 // import {useFormik} from "formik";
@@ -13,34 +13,20 @@ import {useMutation} from "urql";
     },
 })*/
 
-interface RegisterProps {
+const Register: FC = () => {
 
-}
-
-const REGISTER_MUTATION = `
-mutation Register ( $username: String!, $password: String!){
-  register(options: {username: $username, password: $password}){
-    errors {
-      field
-      message
-    }
-    user {
-      id
-      username
-    }
-  }
-}
-`
-
-const Register: FC<RegisterProps> = () => {
-
-    const [, updateRegister] = useMutation(REGISTER_MUTATION)
+    const [, updateRegister] = useRegisterMutation()
 
     return <Formik initialValues={{username: "", password: ""}}
-                   onSubmit={async (props: FormikValues) => {
-                                console.log(props)
-                            return await updateRegister(props)
-    }}>
+                   onSubmit={async (props) => {
+                                    console.log(props)
+                                    const response = await updateRegister(props);
+                                    console.log(response.data?.register.user)
+                                    console.log(response.data?.register.errors)
+                                return response
+                                }
+                            }
+            >
         {
             ({isSubmitting}) => (
                 <Form>
