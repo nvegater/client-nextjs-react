@@ -1,5 +1,6 @@
 import {ThemeProvider, CSSReset, ColorModeProvider} from '@chakra-ui/core';
 import {createClient, Provider} from 'urql';
+import {AppProps} from "next/app";
 
 const client = createClient({
     url: 'http://localhost:4000/graphql',
@@ -10,7 +11,7 @@ const client = createClient({
 
 import theme from '../theme'
 
-function MyApp({Component, pageProps}:any) {
+function MyApp({Component, pageProps}:AppProps) {
     return (
         <Provider value={client}>
             <ThemeProvider theme={theme}>

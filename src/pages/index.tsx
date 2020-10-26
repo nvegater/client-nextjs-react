@@ -1,8 +1,6 @@
 import React from "react";
-import Register from "./register";
-import RegisterResponsiveContainer from "../components/Wrapper";
 
-const Index = () => <RegisterResponsiveContainer><Register/></RegisterResponsiveContainer>
+const Index = () => <div>Hello World</div>
 
 
 export default Index
