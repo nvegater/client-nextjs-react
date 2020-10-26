@@ -11,7 +11,7 @@ const TABLET_MODE_MAX_WIDTH = 991;
 const TABLET_MODE_MIN_WIDTH = 768;
 const MOBILE_MODE_MAX_WIDTH = 767;
 
-const RegisterResponsiveContainer: React.FC<FComponentProps> = ({children}) => {
+const FormResponsiveContainer: React.FC<FComponentProps> = ({children}) => {
     const isDesktop = useMediaQuery({minWidth: DESKTOP_MODE_MIN_WIDTH})
     const isTablet = useMediaQuery({minWidth: TABLET_MODE_MIN_WIDTH, maxWidth: TABLET_MODE_MAX_WIDTH})
     const isMobile = useMediaQuery({maxWidth: MOBILE_MODE_MAX_WIDTH})
@@ -33,7 +33,7 @@ const RegisterResponsiveContainer: React.FC<FComponentProps> = ({children}) => {
     )
 };
 
-export default RegisterResponsiveContainer;
+export default FormResponsiveContainer;
 
 const StyledDiv = styled.div`
   display: flex;
