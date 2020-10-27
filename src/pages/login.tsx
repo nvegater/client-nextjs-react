@@ -1,29 +1,28 @@
 import React, {FC} from "react";
-import {Form, Formik} from "formik";
+import {Form, Formik, FormikHelpers} from "formik";
 import InputField from "../components/InputField";
 import {Button} from "@chakra-ui/core";
 import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
-import {useLoginMutation} from "../generated/graphql";
+import {CredentialsInputs, useLoginMutation} from "../generated/graphql";
 import {toErrorMap} from "../utils/toErrorMap";
 
-const Register: FC = () => {
+const Login: FC = () => {
 
     const router = useRouter();
 
-    const [, login]  = useLoginMutation()
+    const [, login] = useLoginMutation()
 
+    const initialFormValues: CredentialsInputs = {username: "", password: ""};
+    const handleLoginSubmit = async (values: CredentialsInputs, errors: FormikHelpers<CredentialsInputs>) => {
+        const response = await login({options: values});
+        response.data?.login.errors
+            ? errors.setErrors(toErrorMap(response.data.login.errors))
+            : router.push("/");
+    };
 
     return <FormResponsiveContainer>
-        <Formik initialValues={{username: "", password: ""}}
-                onSubmit={async (values, {setErrors}) => {
-                    const response = await login({options:values});
-                    response.data?.login.errors
-                        ? setErrors(toErrorMap(response.data.login.errors))
-                        : router.push("/");
-                }
-                }
-        >
+        <Formik initialValues={initialFormValues} onSubmit={handleLoginSubmit}>
             {
                 ({isSubmitting}) => (
                     <Form>
@@ -37,4 +36,4 @@ const Register: FC = () => {
     </FormResponsiveContainer>
 }
 
-export default Register;
+export default Login;

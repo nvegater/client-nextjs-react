@@ -1,8 +1,8 @@
 import React, {FC} from "react";
-import {Form, Formik} from "formik";
+import {Form, Formik, FormikHelpers} from "formik";
 import InputField from "../components/InputField";
 import {Button} from "@chakra-ui/core";
-import {useRegisterMutation} from "../generated/graphql";
+import {CredentialsInputs, useRegisterMutation} from "../generated/graphql";
 import {toErrorMap} from "../utils/toErrorMap";
 import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
@@ -13,21 +13,15 @@ const Register: FC = () => {
 
     const [, register] = useRegisterMutation()
 
+    const initialFormValues:CredentialsInputs = {username: "", password: ""};
+    const handleRegisterSubmit = async (values:CredentialsInputs, errors: FormikHelpers<CredentialsInputs>) => {
+        const response = await register(values);
+        response.data?.register.errors
+            ? errors.setErrors(toErrorMap(response.data.register.errors))
+            : router.push("/");
+    };
     return <FormResponsiveContainer>
-        <Formik initialValues={{username: "", password: ""}}
-                onSubmit={async (values, {setErrors}) => {
-                    const response = await register(values);
-
-                    if (response.data?.register.errors) {
-                        // response.data.register.errors --> Return err if data is undefined
-                        // response.data?.register.errors --> Return undefined if data is undefined.
-                        setErrors(toErrorMap(response.data.register.errors))
-                    } else if (response.data?.register.user) {
-                        router.push("/")
-                    }
-                }
-                }
-        >
+        <Formik initialValues={initialFormValues} onSubmit={handleRegisterSubmit}>
             {
                 ({isSubmitting}) => (
                     <Form>
