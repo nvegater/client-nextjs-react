@@ -8,6 +8,11 @@ const NavBar: React.FC = () => {
     const [{data, fetching}] = useMeQuery()
     const me = data?.me;
 
+    // TODO Problem: After login, user not displayed because urql cached the useMeQuery()
+    // even if the request works, taking data from Cache, means no user.
+    // after refresing user is shown.
+    // Login/Logout means always updating the cache
+
     return (
         <FormResponsiveContainer>
         {
