@@ -24,3 +24,11 @@ Workflow for creating queries or mutations:
     "gen-graphql-types": "graphql-codegen --config codegengraphql.yml"
 ```
 * hooks should be generated based on the name of the Query/mutation.
+
+This generates hooks for the queries/mutations based on the names given in the .graphql files
+This is good because 
+Urql-hooks automatically investigate the cache before they send a new data request to the outside world.
+
+Update the cache through `exchange-graphcache` to share the updated cache data.
+All the hook-callers (in a way subscribers) have access to the cache-pool, and update the props based on it.
+The urql-cache disappears after browser refresh and urql sends new requests.
