@@ -16,7 +16,7 @@ const FormResponsiveContainer: React.FC<FComponentProps> = ({children}) => {
     const isTablet = useMediaQuery({minWidth: TABLET_MODE_MIN_WIDTH, maxWidth: TABLET_MODE_MAX_WIDTH})
     const isMobile = useMediaQuery({maxWidth: MOBILE_MODE_MAX_WIDTH})
     return (
-        <StyledDiv>
+        <>
             {
                 isDesktop &&
                 <Desktop>{children}</Desktop>
@@ -29,16 +29,12 @@ const FormResponsiveContainer: React.FC<FComponentProps> = ({children}) => {
                 isMobile &&
                 <Mobile>{children}</Mobile>
             }
-        </StyledDiv>
+        </>
     )
 };
 
 export default FormResponsiveContainer;
 
-const StyledDiv = styled.div`
-  display: flex;
-  max-height: 50vw;
-`;
 const resizeToMobile = keyframes`
  0% { width: 70vh; }
  30% { width: 80vh;}

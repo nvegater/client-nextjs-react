@@ -1,7 +1,6 @@
 import React from "react";
 import NextLink from "next/link"
-import {Button, Link} from "@chakra-ui/core";
-import FormResponsiveContainer from "./FormResponsiveContainer";
+import {Box, Button, Flex, Link} from "@chakra-ui/core";
 import {useMeQuery} from "../generated/graphql";
 
 const NavBar: React.FC = () => {
@@ -14,28 +13,28 @@ const NavBar: React.FC = () => {
     // Login/Logout means always updating the cache
 
     return (
-        <FormResponsiveContainer>
+        <Flex alignItems="center" justifyContent="center">
         {
-            fetching && <h1>Loading</h1>
+            fetching && <Box><h1>Loading</h1></Box>
         }
         {
-            !fetching && !me && <>
+            !fetching && !me && <Box>
                 <NextLink href="/login">
                     <Link m={7}>Login</Link>
                 </NextLink>
                 <NextLink href="/register">
                     <Link m={7}>Register</Link>
                 </NextLink>
-            </>
+            </Box>
         }
         {
-            me && <>
+            me && <Box>
                 <h1>Welcome {me.username}</h1>
                 <Button type="submit" m={5}>Logout</Button>
-            </>
+            </Box>
         }
 
-    </FormResponsiveContainer>)
+    </Flex>)
 }
 
 export default NavBar;
