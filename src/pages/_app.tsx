@@ -1,17 +1,55 @@
 import {ThemeProvider, CSSReset, ColorModeProvider} from '@chakra-ui/core';
-import {createClient, Provider} from 'urql';
+import {createClient, dedupExchange, fetchExchange, Provider} from 'urql';
 import {AppProps} from "next/app";
+import {cacheExchange, Cache, QueryInput, Data, UpdateResolver} from '@urql/exchange-graphcache';
+import {LoginMutation, MeDocument, MeQuery} from "../generated/graphql";
+import theme from '../theme';
+import {CacheExchangeOpts} from "@urql/exchange-graphcache/dist/types/cacheExchange";
+
+function typedResolver<Result, Query>(
+    cache: Cache,
+    queryInput: QueryInput,
+    result: any,
+    update: (result: Result, query: Query) => Query) {
+    return cache.updateQuery(queryInput, data => update(result, data as any) as any)
+}
+
+const updateLoginCache:(result: LoginMutation, query: MeQuery) => MeQuery = (result, query) => {
+    return result.login.errors
+        ? query
+        : { //insert result of login on cache.
+            me: result.login.user
+        }
+};
+
+const loginCacheResolver: UpdateResolver = (result, args, cache, info) => {
+    //Wrapper to get Types
+    typedResolver<LoginMutation, MeQuery>(
+        cache,
+        {query: MeDocument},
+        result,
+        updateLoginCache
+    )
+};
+
+const cacheLoginMutation: CacheExchangeOpts = {
+    updates: {
+        Mutation: {
+            login: loginCacheResolver
+        }
+    }
+};
 
 const client = createClient({
     url: 'http://localhost:4000/graphql',
     fetchOptions: {
         credentials: "include"
-    }
+    },
+    exchanges: [dedupExchange, cacheExchange(cacheLoginMutation), fetchExchange],
 });
 
-import theme from '../theme'
 
-function MyApp({Component, pageProps}:AppProps) {
+function MyApp({Component, pageProps}: AppProps) {
     return (
         <Provider value={client}>
             <ThemeProvider theme={theme}>
