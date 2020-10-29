@@ -6,6 +6,8 @@ import {CredentialsInputs, useRegisterMutation} from "../generated/graphql";
 import {toErrorMap} from "../utils/toErrorMap";
 import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
+import {withUrqlClient} from "next-urql";
+import {createUrqlClient} from "../graphql/urqlProvider";
 
 const Register: FC = () => {
 
@@ -35,4 +37,4 @@ const Register: FC = () => {
     </FormResponsiveContainer>
 }
 
-export default Register;
+export default withUrqlClient(createUrqlClient, {ssr:false})(Register);

@@ -6,6 +6,8 @@ import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
 import {CredentialsInputs, useLoginMutation} from "../generated/graphql";
 import {toErrorMap} from "../utils/toErrorMap";
+import {withUrqlClient} from "next-urql";
+import {createUrqlClient} from "../graphql/urqlProvider";
 
 const Login: FC = () => {
 
@@ -36,4 +38,4 @@ const Login: FC = () => {
     </FormResponsiveContainer>
 }
 
-export default Login;
+export default withUrqlClient(createUrqlClient, {ssr:false})(Login);
