@@ -28,7 +28,7 @@ const Login: FC = () => {
             {
                 ({isSubmitting}) => (
                     <Form>
-                        <InputField label="UsernameOrEmail" name="usernameOrEmail" placeholder="Username or Email"/>
+                        <InputField label="Username or email" name="usernameOrEmail" placeholder="Username or email"/>
                         <InputField label="Password" name="password" placeholder="password" type="password"/>
                         <Button type="submit" isLoading={isSubmitting} m={5}>Login</Button>
                     </Form>
