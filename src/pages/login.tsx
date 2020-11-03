@@ -4,7 +4,7 @@ import InputField from "../components/InputField";
 import {Button} from "@chakra-ui/core";
 import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
-import {CredentialsInputs, useLoginMutation} from "../generated/graphql";
+import {LoginInputs, useLoginMutation} from "../generated/graphql";
 import {toErrorMap} from "../utils/toErrorMap";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../graphql/urqlProvider";
@@ -15,8 +15,8 @@ const Login: FC = () => {
 
     const [, login] = useLoginMutation()
 
-    const initialFormValues: CredentialsInputs = {username: "", password: ""};
-    const handleLoginSubmit = async (values: CredentialsInputs, errors: FormikHelpers<CredentialsInputs>) => {
+    const initialFormValues: LoginInputs = {usernameOrEmail: "", password: ""};
+    const handleLoginSubmit = async (values: LoginInputs, errors: FormikHelpers<LoginInputs>) => {
         const response = await login({options: values});
         response.data?.login.errors
             ? errors.setErrors(toErrorMap(response.data.login.errors))
@@ -28,7 +28,7 @@ const Login: FC = () => {
             {
                 ({isSubmitting}) => (
                     <Form>
-                        <InputField label="Username" name="username" placeholder="username"/>
+                        <InputField label="UsernameOrEmail" name="usernameOrEmail" placeholder="Username or Email"/>
                         <InputField label="Password" name="password" placeholder="password" type="password"/>
                         <Button type="submit" isLoading={isSubmitting} m={5}>Login</Button>
                     </Form>
