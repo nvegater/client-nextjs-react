@@ -20,7 +20,7 @@ const Register: FC = () => {
         const response = await register({options: values});
         response.data?.register.errors
             ? errors.setErrors(toErrorMap(response.data.register.errors))
-            : router.push("/");
+            : await router.push("/");
     };
     return <FormResponsiveContainer>
         <Formik initialValues={initialFormValues} onSubmit={handleRegisterSubmit}>

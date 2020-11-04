@@ -20,7 +20,7 @@ const Login: FC = () => {
         const response = await login({options: values});
         response.data?.login.errors
             ? errors.setErrors(toErrorMap(response.data.login.errors))
-            : router.push("/");
+            : await router.push("/");
     };
 
     return <FormResponsiveContainer>
