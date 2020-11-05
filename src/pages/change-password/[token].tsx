@@ -2,13 +2,14 @@ import React from "react";
 import {NextPage} from "next";
 import {Form, Formik, FormikHelpers} from "formik";
 import InputField from "../../components/InputField";
-import {Button} from "@chakra-ui/core";
+import {Button, Link} from "@chakra-ui/core";
 import FormResponsiveContainer from "../../components/FormResponsiveContainer";
 import {ChangePasswordInputs, useChangePasswordMutation} from "../../generated/graphql";
 import {toErrorMap} from "../../utils/toErrorMap";
 import {useRouter} from "next/router";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../../graphql/urqlProvider";
+import NextLink from 'next/link'
 
 interface ChangePasswordProps {
     token: string;
@@ -40,6 +41,9 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
                 ({isSubmitting}) => (
                     <Form>
                         <InputField label="New password" name="newPassword" placeholder="New password" type="password"/>
+                        <NextLink href="/forgot-password">
+                            <Link>forgot it again?</Link>
+                        </NextLink>
                         <Button type="submit" isLoading={isSubmitting} m={5}>Change password</Button>
                     </Form>
                 )
