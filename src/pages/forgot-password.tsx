@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {useForgotPasswordMutation} from "../generated/graphql";
-import {Form, Formik} from "formik";
+import {Form, Formik, FormikHelpers} from "formik";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
 import InputField from "../components/InputField";
 import {Box, Button, Flex, Link} from "@chakra-ui/core";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../graphql/urqlProvider";
 import NextLink from "next/link";
+import {toErrorMap} from "../utils/toErrorMap";
 
 interface ForgotPasswordInputs {
     email: string;
@@ -18,9 +19,11 @@ const ForgotPassword: React.FC = () => {
     const [completedMutation, setCompletedMutation] = useState<boolean>(false)
 
     const initialFormValues: ForgotPasswordInputs = {email: ""};
-    const handleForgotPassword = async (values: ForgotPasswordInputs) => {
-        await forgotPassword({email: values.email});
-        setCompletedMutation(true)
+    const handleForgotPassword = async (values: ForgotPasswordInputs, errors: FormikHelpers<ForgotPasswordInputs>) => {
+        const response = await forgotPassword({email: values.email});
+        response.data?.forgotPassword.errors
+            ? errors.setErrors(toErrorMap(response.data.forgotPassword.errors))
+            : setCompletedMutation(true)
     };
 
     return <FormResponsiveContainer>

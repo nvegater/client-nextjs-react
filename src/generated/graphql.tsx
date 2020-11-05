@@ -50,7 +50,7 @@ export type Mutation = {
   login: UserResponse;
   changePassword: UserResponse;
   logout: Scalars['Boolean'];
-  forgotPassword: Scalars['Boolean'];
+  forgotPassword: UserResponse;
 };
 
 
@@ -158,7 +158,10 @@ export type ForgotPasswordMutationVariables = Exact<{
 
 export type ForgotPasswordMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'forgotPassword'>
+  & { forgotPassword: (
+    { __typename?: 'UserResponse' }
+    & UserResponseFragmentFragment
+  ) }
 );
 
 export type LoginMutationVariables = Exact<{
@@ -253,9 +256,11 @@ export function useChangePasswordMutation() {
 };
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
-  forgotPassword(email: $email)
+  forgotPassword(email: $email) {
+    ...UserResponseFragment
+  }
 }
-    `;
+    ${UserResponseFragmentFragmentDoc}`;
 
 export function useForgotPasswordMutation() {
   return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
