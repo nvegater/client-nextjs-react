@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import {NextPage} from "next";
 import {Form, Formik, FormikHelpers} from "formik";
 import InputField from "../../components/InputField";
-import {Button, Link} from "@chakra-ui/core";
+import {Box, Button, Link} from "@chakra-ui/core";
 import FormResponsiveContainer from "../../components/FormResponsiveContainer";
 import {ChangePasswordInputs, useChangePasswordMutation} from "../../generated/graphql";
 import {toErrorMap} from "../../utils/toErrorMap";
@@ -20,6 +20,7 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
     const router = useRouter();
     const [, changePassword] = useChangePasswordMutation();
     const initialNewPasswordValue: ChangePasswordInputs = {newPassword: "", token: ""};
+    const [tokenExpiredError, setTokenExpiredError] = useState<boolean>(false)
 
     const handleChangePasswordSubmit = async (values: ChangePasswordInputs, errors: FormikHelpers<ChangePasswordInputs>) => {
         const changePasswordNewInputs: ChangePasswordInputs = {
@@ -30,9 +31,20 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
             options: changePasswordNewInputs
         });
         const responseErrors = changePasswordResponse?.changePassword.errors;
-        responseErrors
-            ? errors.setErrors(toErrorMap(responseErrors))
-            : await router.push("/");
+        if (responseErrors) {
+            const amountOfTokenErrors: number =
+                responseErrors
+                    .filter((error) => error.field === "token")
+                    .length;
+            if (amountOfTokenErrors > 0) {
+                setTokenExpiredError(true);
+                errors.setErrors(toErrorMap(responseErrors));
+            } else {
+                errors.setErrors(toErrorMap(responseErrors));
+            }
+        } else {
+            await router.push("/");
+        }
     };
 
     return (<FormResponsiveContainer>
@@ -40,11 +52,26 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
             {
                 ({isSubmitting}) => (
                     <Form>
-                        <InputField label="New password" name="newPassword" placeholder="New password" type="password"/>
-                        <NextLink href="/forgot-password">
-                            <Link>forgot it again?</Link>
-                        </NextLink>
-                        <Button type="submit" isLoading={isSubmitting} m={5}>Change password</Button>
+                        <InputField
+                            label="New password"
+                            name="newPassword"
+                            placeholder="New password"
+                            type="password"
+                            disabled={tokenExpiredError}/>
+                        {
+                            tokenExpiredError && <Box mt={5}>
+                                <NextLink href="/forgot-password">
+                                    <Link>Request another change</Link>
+                                </NextLink>
+                            </Box>
+                        }
+                        <Button
+                            type="submit"
+                            isLoading={isSubmitting}
+                            isDisabled={tokenExpiredError}
+                            m={5}>
+                            Change password
+                        </Button>
                     </Form>
                 )
             }
@@ -58,4 +85,4 @@ ChangePassword.getInitialProps = ({query}) => {
     }
 }
 
-export default withUrqlClient(createUrqlClient, {ssr:false})(ChangePassword);
+export default withUrqlClient(createUrqlClient, {ssr: false})(ChangePassword);
