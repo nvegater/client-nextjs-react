@@ -17,15 +17,11 @@ const ForgotPassword: React.FC = () => {
     const [, forgotPassword] = useForgotPasswordMutation();
     const [completedMutation, setCompletedMutation] = useState<boolean>(false)
 
-
     const initialFormValues: ForgotPasswordInputs = {email: ""};
     const handleForgotPassword = async (values: ForgotPasswordInputs) => {
-        console.log("SEnding mutation")
-        const result = await forgotPassword({email: values.email});
-        console.log(result)
+        await forgotPassword({email: values.email});
         setCompletedMutation(true)
     };
-    console.log(completedMutation)
 
     return <FormResponsiveContainer>
         <Formik initialValues={initialFormValues} onSubmit={handleForgotPassword}>
