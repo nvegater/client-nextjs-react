@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {Form, Formik, FormikHelpers} from "formik";
 import InputField from "../components/InputField";
-import {Box, Button, Link} from "@chakra-ui/core";
+import {Button, Flex, Link} from "@chakra-ui/core";
 import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
 import {LoginInputs, useLoginMutation} from "../generated/graphql";
@@ -31,12 +31,14 @@ const Login: FC = () => {
                     <Form>
                         <InputField label="Username or email" name="usernameOrEmail" placeholder="Username or email"/>
                         <InputField label="Password" name="password" placeholder="password" type="password"/>
-                        <Box mt={5}>
-                            <NextLink href="/forgot-password">
-                                <Link>forgot password?</Link>
-                            </NextLink>
-                        </Box>
-                        <Button type="submit" isLoading={isSubmitting} m={5}>Login</Button>
+                        <Flex justifyContent="space-between" alignItems="center">
+                            <Button type="submit" isLoading={isSubmitting} mt={5}>Login</Button>
+                            <Flex flexDirection="column" alignSelf="flex-end">
+                                <NextLink href="/forgot-password">
+                                    <Link style={{fontSize: 14}}>reset password</Link>
+                                </NextLink>
+                            </Flex>
+                        </Flex>
                     </Form>
                 )
             }
