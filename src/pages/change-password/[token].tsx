@@ -20,7 +20,7 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
     const router = useRouter();
     const [, changePassword] = useChangePasswordMutation();
     const initialNewPasswordValue: ChangePasswordInputs = {newPassword: "", token: ""};
-    const [tokenExpiredError, setTokenExpiredError] = useState<boolean>(false)
+    const [tokenErrorsPresent, setTokenErrorsPresent] = useState<boolean>(false)
 
     const handleChangePasswordSubmit = async (values: ChangePasswordInputs, errors: FormikHelpers<ChangePasswordInputs>) => {
         const changePasswordNewInputs: ChangePasswordInputs = {
@@ -37,7 +37,7 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
                     .filter((error) => error.field === "token")
                     .length;
             if (amountOfTokenErrors > 0) {
-                setTokenExpiredError(true);
+                setTokenErrorsPresent(true);
                 errors.setErrors(toErrorMap(responseErrors));
             } else {
                 errors.setErrors(toErrorMap(responseErrors));
@@ -57,9 +57,9 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
                             name="newPassword"
                             placeholder="New password"
                             type="password"
-                            disabled={tokenExpiredError}/>
+                            disabled={tokenErrorsPresent}/>
                         {
-                            tokenExpiredError && <Box mt={5}>
+                            tokenErrorsPresent && <Box mt={5}>
                                 <NextLink href="/forgot-password">
                                     <Link>Request another change</Link>
                                 </NextLink>
@@ -68,7 +68,7 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
                         <Button
                             type="submit"
                             isLoading={isSubmitting}
-                            isDisabled={tokenExpiredError}
+                            isDisabled={tokenErrorsPresent}
                             m={5}>
                             Change password
                         </Button>
