@@ -1,0 +1,11 @@
+mutation CreatePost ($options: CreatePostInputs!) {
+    createPost(options:$options) {
+        errors {
+            ...ErrorFragment
+        }
+        post {
+            ...PostFragment
+        }
+
+    }
+}

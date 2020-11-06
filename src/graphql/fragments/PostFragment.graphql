@@ -1,0 +1,6 @@
+fragment PostFragment on Post {
+    title
+    text
+    creatorId
+    createdAt
+}

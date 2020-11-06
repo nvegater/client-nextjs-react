@@ -136,6 +136,11 @@ export type ErrorFragmentFragment = (
   & Pick<FieldError, 'field' | 'message'>
 );
 
+export type PostFragmentFragment = (
+  { __typename?: 'Post' }
+  & Pick<Post, 'title' | 'text' | 'creatorId' | 'createdAt'>
+);
+
 export type UserFragmentFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'username'>
@@ -162,6 +167,25 @@ export type ChangePasswordMutation = (
   & { changePassword: (
     { __typename?: 'UserResponse' }
     & UserResponseFragmentFragment
+  ) }
+);
+
+export type CreatePostMutationVariables = Exact<{
+  options: CreatePostInputs;
+}>;
+
+
+export type CreatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { createPost: (
+    { __typename?: 'PostResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & ErrorFragmentFragment
+    )>>, post?: Maybe<(
+      { __typename?: 'Post' }
+      & PostFragmentFragment
+    )> }
   ) }
 );
 
@@ -234,6 +258,14 @@ export type PostsQuery = (
   )> }
 );
 
+export const PostFragmentFragmentDoc = gql`
+    fragment PostFragment on Post {
+  title
+  text
+  creatorId
+  createdAt
+}
+    `;
 export const ErrorFragmentFragmentDoc = gql`
     fragment ErrorFragment on FieldError {
   field
@@ -267,6 +299,23 @@ export const ChangePasswordDocument = gql`
 
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
+};
+export const CreatePostDocument = gql`
+    mutation CreatePost($options: CreatePostInputs!) {
+  createPost(options: $options) {
+    errors {
+      ...ErrorFragment
+    }
+    post {
+      ...PostFragment
+    }
+  }
+}
+    ${ErrorFragmentFragmentDoc}
+${PostFragmentFragmentDoc}`;
+
+export function useCreatePostMutation() {
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
 };
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
