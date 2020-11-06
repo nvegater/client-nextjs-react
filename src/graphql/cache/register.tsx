@@ -6,7 +6,7 @@ const updateRegisterCache: (result: RegisterMutation, query: MeQuery) => MeQuery
     return result.register.errors
         ? query
         : { //insert result of login on cache.
-            me: result.register.user
+            me: result.register
         }
 };
 

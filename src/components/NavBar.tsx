@@ -33,7 +33,7 @@ const NavBar: React.FC = () => {
             }
             {
                 me && <Box>
-                    <h1>Welcome {me.username}</h1>
+                    <h1>Welcome {me.user?.username}</h1>
                     <Button type="submit" m={5} onClick={handleLogout} isLoading={loadingLogout}>Logout</Button>
                 </Box>
             }

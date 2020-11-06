@@ -7,7 +7,7 @@ const updateLoginCache: (result: LoginMutation, query: MeQuery) => MeQuery = (re
     return result.login.errors
         ? query
         : { //insert result of login on cache.
-            me: result.login.user
+            me: result.login
         }
 };
 const loginCacheResolver: UpdateResolver = (result, args, cache, _info) => {
