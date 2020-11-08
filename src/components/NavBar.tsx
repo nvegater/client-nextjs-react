@@ -1,6 +1,6 @@
 import React from "react";
 import NextLink from "next/link"
-import {Box, Button, Flex, Link} from "@chakra-ui/core";
+import {Box, Button, Flex} from "@chakra-ui/core";
 import {useLogoutMutation, useMeQuery} from "../generated/graphql";
 import isServer from "../utils/isServer";
 
@@ -17,24 +17,30 @@ const NavBar: React.FC = () => {
     }
 
     return (
-        <Flex justifyContent={me?.user ? "right" : "center"}>
+        <Flex justifyContent={me?.user ? "right" : "center"}
+              position="sticky"
+              top={0}
+              zIndex={1}
+              backgroundColor="black"
+              height="60px"
+        >
             {
                 loadingMeQuery && <Box><h1>Loading</h1></Box>
             }
             {
-                !loadingMeQuery && !me?.user && <Flex>
+                !loadingMeQuery && !me?.user && <Flex my="0.6rem">
                     <NextLink href="/login">
-                        <Link m={8}><Button>Login</Button></Link>
+                        <Button mr={8}>Login</Button>
                     </NextLink>
                     <NextLink href="/register">
-                        <Link m={8}><Button>Register</Button></Link>
+                        <Button ml={8}>Register</Button>
                     </NextLink>
                 </Flex>
             }
             {
                 me?.user && <Flex alignItems="center">
                     <h1>Welcome {me.user?.username}</h1>
-                    <Button type="submit" m={5} onClick={handleLogout} isLoading={loadingLogout}>Logout</Button>
+                    <Button type="submit" onClick={handleLogout} mx="1rem" isLoading={loadingLogout}>Logout</Button>
                 </Flex>
             }
 
