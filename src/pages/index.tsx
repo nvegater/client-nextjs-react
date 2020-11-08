@@ -1,13 +1,12 @@
 import React from "react";
-import NavBar from "../components/NavBar";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../graphql/urqlProvider";
 import {usePostsQuery} from "../generated/graphql";
+import Layout from "../components/Layout";
 
 const Index = () => {
     const [{data:postsResponse, fetching}] = usePostsQuery()
-    return <>
-        <NavBar/>
+    return <Layout>
         {
             fetching && <h1>Loading</h1>
         }
@@ -29,7 +28,7 @@ const Index = () => {
                 }
             </>
         }
-    </>
+    </Layout>
 }
 
 export default withUrqlClient(createUrqlClient, {ssr:true})(Index)

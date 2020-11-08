@@ -1,4 +1,5 @@
 import React from "react";
+import {useRouter} from "next/router";
 
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
 import InputField from "../components/InputField";
@@ -14,14 +15,16 @@ import {createUrqlClient} from "../graphql/urqlProvider";
 
 const CreatePost: React.FC = () => {
     const [, createPost] = useCreatePostMutation();
+    const router = useRouter();
     const initialFormValues: CreatePostInputs = {title: "", text: ""};
+
     const handleCreatePostSubmit = async (values: CreatePostInputs, errors: FormikHelpers<CreatePostInputs>) => {
         const response = await createPost({options: values});
         if (response.data?.createPost.errors) {
             console.log(response.data.createPost.errors)
             errors.setErrors(toErrorMap(response.data.createPost.errors))
         } else {
-            // what to do when a post is submitted
+            await router.push("/")
         }
     };
     return (
@@ -41,4 +44,4 @@ const CreatePost: React.FC = () => {
     );
 };
 
-export default withUrqlClient(createUrqlClient, {ssr:false})(CreatePost);
+export default withUrqlClient(createUrqlClient, {ssr: false})(CreatePost);
