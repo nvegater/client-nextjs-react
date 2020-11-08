@@ -17,28 +17,28 @@ const NavBar: React.FC = () => {
     }
 
     return (
-            <Flex alignItems="center" justifyContent="center">
-                {
-                    loadingMeQuery && <Box><h1>Loading</h1></Box>
-                }
-                {
-                    !loadingMeQuery && !me?.user && <Box>
-                        <NextLink href="/login">
-                            <Link m={7}>Login</Link>
-                        </NextLink>
-                        <NextLink href="/register">
-                            <Link m={7}>Register</Link>
-                        </NextLink>
-                    </Box>
-                }
-                {
-                    me?.user && <Box>
-                        <h1>Welcome {me.user?.username}</h1>
-                        <Button type="submit" m={5} onClick={handleLogout} isLoading={loadingLogout}>Logout</Button>
-                    </Box>
-                }
+        <Flex justifyContent={me?.user ? "right" : "center"}>
+            {
+                loadingMeQuery && <Box><h1>Loading</h1></Box>
+            }
+            {
+                !loadingMeQuery && !me?.user && <Flex>
+                    <NextLink href="/login">
+                        <Link m={8}><Button>Login</Button></Link>
+                    </NextLink>
+                    <NextLink href="/register">
+                        <Link m={8}><Button>Register</Button></Link>
+                    </NextLink>
+                </Flex>
+            }
+            {
+                me?.user && <Flex alignItems="center">
+                    <h1>Welcome {me.user?.username}</h1>
+                    <Button type="submit" m={5} onClick={handleLogout} isLoading={loadingLogout}>Logout</Button>
+                </Flex>
+            }
 
-            </Flex>
+        </Flex>
     )
 }
 

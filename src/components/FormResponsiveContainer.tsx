@@ -44,7 +44,7 @@ const resizeToMobile = keyframes`
 const Mobile = styled.div`
   text-align: center;
   max-width: 90vw;
-  margin: 25vh 5vw 25vh 5vw;
+  margin: 8vh 5vw 25vh 5vw;
   animation-name: ${resizeToMobile};
   animation-duration: 1s;
   animation-iteration-count: initial;
@@ -52,13 +52,13 @@ const Mobile = styled.div`
 const Tablet = styled.div`
   text-align: center;
   max-width: 70vw;
-  margin: 25vh 15vw 25vh 15vw;
+  margin: 8vh 15vw 25vh 15vw;
 `;
 const Desktop = styled.div`
   text-align: center;
   justify-content: center;  
   max-width: 20vw;
-  margin: 25vh 40vw 25vh 40vw;
+  margin: 8vh 40vw 25vh 40vw;
 `;
 
 

@@ -12,6 +12,7 @@ import {CreatePostInputs, useCreatePostMutation} from "../generated/graphql";
 import {toErrorMap} from "../utils/toErrorMap";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../graphql/urqlProvider";
+import Layout from "../components/Layout";
 
 const CreatePost: React.FC = () => {
     const [, createPost] = useCreatePostMutation();
@@ -28,19 +29,21 @@ const CreatePost: React.FC = () => {
         }
     };
     return (
-        <FormResponsiveContainer>
-            <Formik initialValues={initialFormValues} onSubmit={handleCreatePostSubmit}>
-                {
-                    ({isSubmitting}) => (
-                        <Form>
-                            <InputField label="Title" name="title" placeholder="title"/>
-                            <TextArea label="Text" name="text" placeholder="...."/>
-                            <Button type="submit" isLoading={isSubmitting} mt={5}>Submit post</Button>
-                        </Form>
-                    )
-                }
-            </Formik>
-        </FormResponsiveContainer>
+        <Layout>
+            <FormResponsiveContainer>
+                <Formik initialValues={initialFormValues} onSubmit={handleCreatePostSubmit}>
+                    {
+                        ({isSubmitting}) => (
+                            <Form>
+                                <InputField label="Title" name="title" placeholder="title"/>
+                                <TextArea label="Text" name="text" placeholder="...."/>
+                                <Button type="submit" isLoading={isSubmitting} mt={5}>Submit post</Button>
+                            </Form>
+                        )
+                    }
+                </Formik>
+            </FormResponsiveContainer>
+        </Layout>
     );
 };
 

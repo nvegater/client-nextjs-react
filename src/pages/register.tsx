@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import FormResponsiveContainer from "../components/FormResponsiveContainer";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../graphql/urqlProvider";
+import Layout from "../components/Layout";
 
 const Register: FC = () => {
 
@@ -22,20 +23,22 @@ const Register: FC = () => {
             ? errors.setErrors(toErrorMap(response.data.register.errors))
             : await router.push("/");
     };
-    return <FormResponsiveContainer>
-        <Formik initialValues={initialFormValues} onSubmit={handleRegisterSubmit}>
-            {
-                ({isSubmitting}) => (
-                    <Form>
-                        <InputField label="Username" name="username" placeholder="username"/>
-                        <InputField label="Email" name="email" placeholder="email"/>
-                        <InputField label="Password" name="password" placeholder="password" type="password"/>
-                        <Button type="submit" isLoading={isSubmitting} m={5}>Register</Button>
-                    </Form>
-                )
-            }
-        </Formik>
-    </FormResponsiveContainer>
+    return <Layout>
+        <FormResponsiveContainer>
+            <Formik initialValues={initialFormValues} onSubmit={handleRegisterSubmit}>
+                {
+                    ({isSubmitting}) => (
+                        <Form>
+                            <InputField label="Username" name="username" placeholder="username"/>
+                            <InputField label="Email" name="email" placeholder="email"/>
+                            <InputField label="Password" name="password" placeholder="password" type="password"/>
+                            <Button type="submit" isLoading={isSubmitting} m={5}>Register</Button>
+                        </Form>
+                    )
+                }
+            </Formik>
+        </FormResponsiveContainer>
+    </Layout>
 }
 
 export default withUrqlClient(createUrqlClient, {ssr: false})(Register);

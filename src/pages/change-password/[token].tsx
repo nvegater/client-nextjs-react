@@ -10,6 +10,7 @@ import {useRouter} from "next/router";
 import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../../graphql/urqlProvider";
 import NextLink from 'next/link'
+import Layout from "../../components/Layout";
 
 interface ChangePasswordProps {
     token: string;
@@ -47,36 +48,39 @@ export const ChangePassword: NextPage<ChangePasswordProps> = ({token}) => {
         }
     };
 
-    return (<FormResponsiveContainer>
-        <Formik initialValues={initialNewPasswordValue} onSubmit={handleChangePasswordSubmit}>
-            {
-                ({isSubmitting}) => (
-                    <Form>
-                        <InputField
-                            label="New password"
-                            name="newPassword"
-                            placeholder="New password"
-                            type="password"
-                            disabled={tokenErrorsPresent}/>
-                        {
-                            tokenErrorsPresent && <Box mt={5}>
-                                <NextLink href="/forgot-password">
-                                    <Link>Request another change</Link>
-                                </NextLink>
-                            </Box>
-                        }
-                        <Button
-                            type="submit"
-                            isLoading={isSubmitting}
-                            isDisabled={tokenErrorsPresent}
-                            m={5}>
-                            Change password
-                        </Button>
-                    </Form>
-                )
-            }
-        </Formik>
-    </FormResponsiveContainer>);
+    return (
+        <Layout>
+            <FormResponsiveContainer>
+                <Formik initialValues={initialNewPasswordValue} onSubmit={handleChangePasswordSubmit}>
+                    {
+                        ({isSubmitting}) => (
+                            <Form>
+                                <InputField
+                                    label="New password"
+                                    name="newPassword"
+                                    placeholder="New password"
+                                    type="password"
+                                    disabled={tokenErrorsPresent}/>
+                                {
+                                    tokenErrorsPresent && <Box mt={5}>
+                                        <NextLink href="/forgot-password">
+                                            <Link>Request another change</Link>
+                                        </NextLink>
+                                    </Box>
+                                }
+                                <Button
+                                    type="submit"
+                                    isLoading={isSubmitting}
+                                    isDisabled={tokenErrorsPresent}
+                                    m={5}>
+                                    Change password
+                                </Button>
+                            </Form>
+                        )
+                    }
+                </Formik>
+            </FormResponsiveContainer>
+        </Layout>);
 }
 
 ChangePassword.getInitialProps = ({query}) => {

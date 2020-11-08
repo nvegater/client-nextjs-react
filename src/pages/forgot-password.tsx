@@ -8,6 +8,7 @@ import {withUrqlClient} from "next-urql";
 import {createUrqlClient} from "../graphql/urqlProvider";
 import NextLink from "next/link";
 import {toErrorMap} from "../utils/toErrorMap";
+import Layout from "../components/Layout";
 
 interface ForgotPasswordInputs {
     email: string;
@@ -26,28 +27,30 @@ const ForgotPassword: React.FC = () => {
             : setCompletedMutation(true)
     };
 
-    return <FormResponsiveContainer>
-        <Formik initialValues={initialFormValues} onSubmit={handleForgotPassword}>
-            {
-                ({isSubmitting}) => completedMutation ?
-                    <Flex alignItems="center" flexDirection="column" justifyContent="center">
-                        <Box>
-                            Email sent
-                        </Box>
-                        <Box mt={5}>
-                            <NextLink href="/login">
-                                <Link>back to login</Link>
-                            </NextLink>
-                        </Box>
-                    </Flex> : (
-                        <Form>
-                            <InputField label="Email" name="email" placeholder="email"/>
-                            <Button type="submit" isLoading={isSubmitting} m={5}>Reset password</Button>
-                        </Form>
-                    )
-            }
-        </Formik>
-    </FormResponsiveContainer>
+    return <Layout>
+        <FormResponsiveContainer>
+            <Formik initialValues={initialFormValues} onSubmit={handleForgotPassword}>
+                {
+                    ({isSubmitting}) => completedMutation ?
+                        <Flex alignItems="center" flexDirection="column" justifyContent="center">
+                            <Box>
+                                Email sent
+                            </Box>
+                            <Box mt={5}>
+                                <NextLink href="/login">
+                                    <Link>back to login</Link>
+                                </NextLink>
+                            </Box>
+                        </Flex> : (
+                            <Form>
+                                <InputField label="Email" name="email" placeholder="email"/>
+                                <Button type="submit" isLoading={isSubmitting} m={5}>Reset password</Button>
+                            </Form>
+                        )
+                }
+            </Formik>
+        </FormResponsiveContainer>
+    </Layout>
 }
 
 export default withUrqlClient(createUrqlClient, {ssr: false})(ForgotPassword);
