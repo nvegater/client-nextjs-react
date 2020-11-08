@@ -3,6 +3,7 @@ import {Cache, QueryInput} from "@urql/exchange-graphcache";
 import loginCacheResolver from "./login";
 import registerCacheResolver from "./register";
 import logoutCacheResolver from "./logout";
+import changePasswordCacheResolver from "./changePassword";
 
 export function typedResolver<Result, Query>(
     cache: Cache,
@@ -17,7 +18,8 @@ const cacheUpdates: CacheExchangeOpts = {
         Mutation: {
             login: loginCacheResolver,
             register: registerCacheResolver,
-            logout: logoutCacheResolver
+            logout: logoutCacheResolver,
+            changePassword: changePasswordCacheResolver
         }
     }
 };
